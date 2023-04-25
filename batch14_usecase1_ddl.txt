@@ -1,0 +1,50 @@
+#create a dataset for stage 
+
+create schema stage_gcp;
+
+#create a detaset for history 
+
+create schema history_gcp;
+
+#create stage table by using stage dataset name with columns
+
+create table stage_gcp.stage1(student_id string,student_name string,student_gender string)
+
+#create history table by using history dataset with columns
+
+create table history_gcp.history1(student_id int ,student_name string,student_gender string)
+ 
+#create data set for audit 
+
+CREATE SCHEMA IF NOT EXISTS audit_student1;
+
+#create stage table by using audit dataset with required columns
+
+CREATE TABLE
+
+  audit_student1.stage_audit2(datasetname string OPTIONS (description ='id of student'),
+    table_name string,
+    total_records int,
+    audit_date timestamp,
+    audit_by string) OPTIONS(description ='this audit table which is used to identify table audit');
+
+# ceate history table by using audit dataset with required columns 
+
+CREATE TABLE
+  audit_student1.history_audit2(datasetname string options(description ='id of student'),
+    table_name string,
+    total_records int,
+    audit_date timestamp,
+    audit_by string) options(description ='this audit table which is used to identify table audit')
+
+# careat view to history table 
+
+
+CREATE VIEW
+  history_gcp.view1 AS
+SELECT
+  *
+FROM
+  history_gcp.history1
+WHERE
+  student_id IS NOT NULL ; 
